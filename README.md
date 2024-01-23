@@ -1,70 +1,654 @@
-# Getting Started with Create React App
+# Login register Form in React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Start a new Project in React, you need NodsJS and NPM
 
-## Available Scripts
+### Create a new Project using NPX
+```bash
+npx create-react-app login-register-form
+```
 
-In the project directory, you can run:
+### Change to folder login-register-form, start VS-Code and npm
+```bash
+cd login-register-form
+code .
+npm start
+```
 
-### `npm start`
+### Goto src Folder in VS-Code and create new files with the Names "Login.jsx" and "Register.jsx"
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Inside Register.jsx create the Component itself
+```
+export const Register = () => {
+    return (
+        <>Register</>
+    )
+}
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Inside Login.jsx create the Component itself
+```
+export const Login = () => {
+    return (
+        <>Login</>
+    )
+}
+```
 
-### `npm test`
+### Import both components to App.jsx and delete all Text between the two Div's. We test the code by inserting a <login /> in line 9. We can check this in the browser. 
+```
+import logo from './logo.svg';
+import './App.css';
+import { Login } from "./Login";
+import { Register } from "./Register"
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+function App() {
+  return (
+    <div className="App">
+  
+    </div>
+  );
+}
 
-### `npm run build`
+export default App;
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### In Login.jsx start creating the Form and add a Button to submit the Form. First delete the Placeholder <>Login</>.
+```
+export const Login = () => {
+    return (
+        <form>
+            <label for="email">email</label>
+            <input type="email" placeholder="yourmail@gmail.com" id="email" name="email" />
+            <label for="password">password</label>
+            <input type="password" placeholder="********" id="password" name="password" /> 
+            {/* Password will not be displayed because of the type set */}
+            <button>Log In</button>
+        </form>
+    )
+}
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### To Capture the Values of what user puts in our email and password inputs we need to use new state hook from react
+```
+import React, { useState } from "react"
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+export const Login = () => {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+    return (
+        <form>
+            <label for="email">email</label>
+            <input value={email} type="email" placeholder="yourmail@gmail.com" id="email" name="email" />
+            <label for="password">password</label>
+            <input value={pass} type="password" placeholder="********" id="password" name="password" /> 
+            {/* Password will not be displayed because of the type set */}
+            <button>Log In</button>
+        </form>
+    )
+}
+```
 
-### `npm run eject`
+### Once these values get updated they're stored in the state we need to somehow capture them when user submits the form
+```
+import React, { useState } from "react"
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+export const Login = () => {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        {/* if we don't declare prevent default the page is going to get reloaded an we're lose the State */ }
+        console.log(email);
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    }
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    return (
+        <form onSubmit={handleSubmit}>
+            <label for="email">email</label>
+            <input value={email} type="email" placeholder="yourmail@gmail.com" id="email" name="email" />
+            <label for="password">password</label>
+            <input value={pass} type="password" placeholder="********" id="password" name="password" /> 
+            {/* Password will not be displayed because of the type set */}
+            <button type="submit">Log In</button>
+        </form>
+    )
+}
+```
 
-## Learn More
+### Add a small Button for unregistred Users
+```
+import React, { useState } from "react"
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+export const Login = () => {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        {/* if we don't declare prevent default the page is going to get reloaded an we're lose the State */ }
+        console.log(email);
 
-### Code Splitting
+    }
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+    return (
+        <>
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="email">email</label>
+			{/* Since for is a reserved word in JavaScript, React elements use htmlFor instead. */}
+            <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="yourmail@gmail.com" id="email" name="email" />
+            <label htmlFor="password">password</label>
+            <input value={pass} onChange={(e) => setPass(e.target.value)}type="password" placeholder="********" id="password" name="password" /> 
+            {/* Password will not be displayed because of the type set */}
+            <button type="submit">Log In</button>
+        </form>
+        <button>Need a Account? Register here</button>
+        </>
+    )
+}
+```
 
-### Analyzing the Bundle Size
+### Go to App.js and create a logic that would control which form is getting displayed
+```
+import React, { useState } from "react";
+import logo from './logo.svg';
+import './App.css';
+import { Login } from "./Login";
+import { Register } from "./Register";
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+function App() {
+  const [currentForm, setCurrentForm] = useState('login');
 
-### Making a Progressive Web App
+  return (
+    <div className="App">
+      {
+        currentForm === "login" ? <Login /> : <Register />
+      }
+    </div>
+  );
+}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+export default App;
+```
 
-### Advanced Configuration
+### Go to Register.jsx and create the Register form
+```
+import React, { useState } from "react"
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+export const Register = () => {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+    const [name, setName] = useState('');
 
-### Deployment
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        {/* if we don't declare prevent default the page is going to get reloaded an we're lose the State */ }
+        console.log(email);
+    }
+    return (
+        <>
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="name">Full name</label>
+			{/* Since for is a reserved word in JavaScript, React elements use htmlFor instead. */}
+            <input value={name} name="name" id="name" placeholder="full Name" />
+            <label htmlFor="email">email</label>
+            <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="yourmail@gmail.com" id="email" name="email" />
+            <label htmlFor="password">password</label>
+            <input value={pass} onChange={(e) => setPass(e.target.value)}type="password" placeholder="********" id="password" name="password" /> 
+            {/* Password will not be displayed because of the type set */}
+            <button type="submit">Log In</button>
+        </form>
+        <button>Already have a Account? Login here</button>
+        </>
+    )
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Go to App.js and add functionality to the button that switch the Form
+```
+import React, { useState } from "react";
+import logo from './logo.svg';
+import './App.css';
+import { Login } from "./Login";
+import { Register } from "./Register";
 
-### `npm run build` fails to minify
+function App() {
+  const [currentForm, setCurrentForm] = useState('login');
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  const toggleForm = (formName) => {
+    setCurrentForm(formName);
+  }
+
+  return (
+    <div className="App">
+      {
+        currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />
+      }
+    </div>
+  );
+}
+
+export default App;
+```
+
+### Go to Login.jsx and add functionality to the button that switch the Form
+```
+import React, { useState } from "react"
+
+export const Login = (props) => {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        {/* if we don't declare prevent default the page is going to get reloaded an we're lose the State */ }
+        console.log(email);
+
+    }
+
+    return (
+        <>
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="email">email</label>
+            {/* Since for is a reserved word in JavaScript, React elements use htmlFor instead. */}
+            <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="yourmail@gmail.com" id="email" name="email" />
+            <label htmlFor="password">password</label>
+            <input value={pass} onChange={(e) => setPass(e.target.value)}type="password" placeholder="********" id="password" name="password" /> 
+            {/* Password will not be displayed because of the type set */}
+            <button type="submit">Log In</button>
+        </form>
+        <button onClick={() => props.onFormSwitch('register')}>Need a Account? Register here</button>
+        </>
+    )
+}
+```
+
+### Go to Register.jsx and add functionality to the button that switch the Form
+```
+import React, { useState } from "react"
+
+export const Register = (props) => {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+    const [name, setName] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        {/* if we don't declare prevent default the page is going to get reloaded an we're lose the State */ }
+        console.log(email);
+    }
+    return (
+        <>
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="name">Full name</label>
+            {/* Since for is a reserved word in JavaScript, React elements use htmlFor instead. */}
+            <input value={name} name="name" id="name" placeholder="full Name" />
+            <label htmlFor="email">email</label>
+            <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="yourmail@gmail.com" id="email" name="email" />
+            <label htmlFor="password">password</label>
+            <input value={pass} onChange={(e) => setPass(e.target.value)}type="password" placeholder="********" id="password" name="password" /> 
+            {/* Password will not be displayed because of the type set */}
+            <button type="submit">Log In</button>
+        </form>
+        <button onClick={() => props.onFormSwitch('login')}>Already have a Account? Login here</button>
+        </>
+    )
+}
+```
+
+# Change the Style of your Login mask
+
+### Go to Login.jsx and create a Container with a class name
+```
+import React, { useState } from "react"
+
+export const Login = (props) => {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        {/* if we don't declare prevent default the page is going to get reloaded an we're lose the State */ }
+        console.log(email);
+
+    }
+
+    return (
+        <div className="auth-form-container">
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="email">email</label>
+            {/* Since for is a reserved word in JavaScript, React elements use htmlFor instead. */}
+            <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="yourmail@gmail.com" id="email" name="email" />
+            <label htmlFor="password">password</label>
+            <input value={pass} onChange={(e) => setPass(e.target.value)}type="password" placeholder="********" id="password" name="password" /> 
+            {/* Password will not be displayed because of the type set */}
+            <button type="submit">Log In</button>
+        </form>
+        <button onClick={() => props.onFormSwitch('register')}>Need a Account? Register here</button>
+        </div>
+    )
+}
+```
+
+### Do the same in Register.jsx
+```
+import React, { useState } from "react"
+
+export const Register = (props) => {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+    const [name, setName] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        {/* if we don't declare prevent default the page is going to get reloaded an we're lose the State */ }
+        console.log(email);
+    }
+    return (
+        <div className="auth-form-container">
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="name">Full name</label>
+            {/* Since for is a reserved word in JavaScript, React elements use htmlFor instead. */}
+            <input value={name} name="name" id="name" placeholder="full Name" />
+            <label htmlFor="email">email</label>
+            <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="yourmail@gmail.com" id="email" name="email" />
+            <label htmlFor="password">password</label>
+            <input value={pass} onChange={(e) => setPass(e.target.value)}type="password" placeholder="********" id="password" name="password" /> 
+            {/* Password will not be displayed because of the type set */}
+            <button type="submit">Log In</button>
+        </form>
+        <button onClick={() => props.onFormSwitch('login')}>Already have a Account? Login here</button>
+        </div>
+    )
+}
+```
+
+### Go to App.css and add the styling Content, be sure that you delete all unneeded Lines
+```
+.App {
+  text-align: center;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-image: linear-gradient(79deg, #7439db, #c66fbc 48%, #f7944d);
+}
+
+.auth-form-container, .login-form, .register-form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  text-align: left;
+  padding: 0.25rem 0;
+}
+
+input {
+  margin: 0.5rem 0;
+}
+
+button {
+  border: none;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #7439db;
+}
+```
+
+### Apply the Flex Direction to the form as well, go to Login.jsx
+```
+import React, { useState } from "react"
+
+export const Login = (props) => {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        {/* if we don't declare prevent default the page is going to get reloaded an we're lose the State */ }
+        console.log(email);
+
+    }
+
+    return (
+        <div className="auth-form-container">
+        <form className="login-form" onSubmit={handleSubmit}>
+            <label htmlFor="email">email</label>
+            {/* Since for is a reserved word in JavaScript, React elements use htmlFor instead. */}
+            <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="yourmail@gmail.com" id="email" name="email" />
+            <label htmlFor="password">password</label>
+            <input value={pass} onChange={(e) => setPass(e.target.value)}type="password" placeholder="********" id="password" name="password" /> 
+            {/* Password will not be displayed because of the type set */}
+            <button type="submit">Log In</button>
+        </form>
+        <button onClick={() => props.onFormSwitch('register')}>Need a Account? Register here</button>
+        </div>
+    )
+}
+```
+
+### Do the same in Register.jsx
+```
+import React, { useState } from "react"
+
+export const Register = (props) => {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+    const [name, setName] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        {/* if we don't declare prevent default the page is going to get reloaded an we're lose the State */ }
+        console.log(email);
+    }
+    return (
+        <div className="auth-form-container">
+        <form className="register-form" onSubmit={handleSubmit}>
+            <label htmlFor="name">Full name</label>
+            {/* Since for is a reserved word in JavaScript, React elements use htmlFor instead. */}
+            <input value={name} name="name" id="name" placeholder="full Name" />
+            <label htmlFor="email">email</label>
+            <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="yourmail@gmail.com" id="email" name="email" />
+            <label htmlFor="password">password</label>
+            <input value={pass} onChange={(e) => setPass(e.target.value)}type="password" placeholder="********" id="password" name="password" /> 
+            {/* Password will not be displayed because of the type set */}
+            <button type="submit">Log In</button>
+        </form>
+        <button onClick={() => props.onFormSwitch('login')}>Already have a Account? Login here</button>
+        </div>
+    )
+}
+```
+
+### Change the Login and Don't have a Account Buttons
+```
+import React, { useState } from "react"
+
+export const Login = (props) => {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        {/* if we don't declare prevent default the page is going to get reloaded an we're lose the State */ }
+        console.log(email);
+
+    }
+
+    return (
+        <div className="auth-form-container">
+        <form className="login-form" onSubmit={handleSubmit}>
+            <label htmlFor="email">email</label>
+            {/* Since for is a reserved word in JavaScript, React elements use htmlFor instead. */}
+            <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="yourmail@gmail.com" id="email" name="email" />
+            <label htmlFor="password">password</label>
+            <input value={pass} onChange={(e) => setPass(e.target.value)}type="password" placeholder="********" id="password" name="password" /> 
+            {/* Password will not be displayed because of the type set */}
+            <button type="submit">Log In</button>
+        </form>
+        <button className="link-btn" onClick={() => props.onFormSwitch('register')}>Need a Account? Register here</button>
+        </div>
+    )
+}
+```
+
+### Do the same in Register.jsx
+```
+import React, { useState } from "react"
+
+export const Register = (props) => {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+    const [name, setName] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        {/* if we don't declare prevent default the page is going to get reloaded an we're lose the State */ }
+        console.log(email);
+    }
+    return (
+        <div className="auth-form-container">
+        <form className="register-form" onSubmit={handleSubmit}>
+            <label htmlFor="name">Full name</label>
+            {/* Since for is a reserved word in JavaScript, React elements use htmlFor instead. */}
+            <input value={name} name="name" id="name" placeholder="full Name" />
+            <label htmlFor="email">email</label>
+            <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="yourmail@gmail.com" id="email" name="email" />
+            <label htmlFor="password">password</label>
+            <input value={pass} onChange={(e) => setPass(e.target.value)}type="password" placeholder="********" id="password" name="password" /> 
+            {/* Password will not be displayed because of the type set */}
+            <button type="submit">Log In</button>
+        </form>
+        <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Already have a Account? Login here</button>
+        </div>
+    )
+}
+```
+
+### Go to App.css and edit the Style of the Class link-btn, we also add some design styles here
+```
+.App {
+  text-align: center;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-image: linear-gradient(79deg, #7439db, #c66fbc 48%, #f7944d);
+}
+
+.auth-form-container, .login-form, .register-form {
+  display: flex;
+  flex-direction: column;
+}
+
+@media scrren and (min-width: 600px) {
+  .auth-form-container {
+    padding: 5rem;
+    border: 1px solid white;
+    border-radius: 10px;
+    margin: 0.5rem;
+  }
+}
+
+
+label {
+  text-align: left;
+  padding: 0.25rem 0;
+}
+
+input {
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+}
+
+button {
+  border: none;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #7439db;
+}
+
+.link-btn {
+  background: none;
+  color: white;
+  text-decoration: underline;
+}
+```
+
+# Add Names to the Form
+
+### go to Register.jsx and add the Title
+```
+import React, { useState } from "react"
+
+export const Register = (props) => {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+    const [name, setName] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        {/* if we don't declare prevent default the page is going to get reloaded an we're lose the State */ }
+        console.log(email);
+    }
+    return (
+        <div className="auth-form-container">
+            <h2>Register</h2>
+        <form className="register-form" onSubmit={handleSubmit}>
+            <label htmlFor="name">Full name</label>
+            {/* Since for is a reserved word in JavaScript, React elements use htmlFor instead. */}
+            <input value={name} name="name" id="name" placeholder="full Name" />
+            <label htmlFor="email">email</label>
+            <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="yourmail@gmail.com" id="email" name="email" />
+            <label htmlFor="password">password</label>
+            <input value={pass} onChange={(e) => setPass(e.target.value)}type="password" placeholder="********" id="password" name="password" /> 
+            {/* Password will not be displayed because of the type set */}
+            <button type="submit">Log In</button>
+        </form>
+        <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Already have a Account? Login here</button>
+        </div>
+    )
+}
+```
+
+### go to Login.jsx and do the same, but change the Title to Login
+```
+import React, { useState } from "react"
+
+export const Login = (props) => {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        {/* if we don't declare prevent default the page is going to get reloaded an we're lose the State */ }
+        console.log(email);
+
+    }
+
+    return (
+        <div className="auth-form-container">
+            <h2>Login</h2>
+        <form className="login-form" onSubmit={handleSubmit}>
+            <label htmlFor="email">email</label>
+            {/* Since for is a reserved word in JavaScript, React elements use htmlFor instead. */}
+            <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="yourmail@gmail.com" id="email" name="email" />
+            <label htmlFor="password">password</label>
+            <input value={pass} onChange={(e) => setPass(e.target.value)}type="password" placeholder="********" id="password" name="password" /> 
+            {/* Password will not be displayed because of the type set */}
+            <button type="submit">Log In</button>
+        </form>
+        <button className="link-btn" onClick={() => props.onFormSwitch('register')}>Need a Account? Register here</button>
+        </div>
+    )
+}
+```
