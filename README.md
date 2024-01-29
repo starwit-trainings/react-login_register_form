@@ -1,20 +1,32 @@
-# Login register Form in React
+# Login Register Form in React
 
-## Start a new Project in React, you need NodsJS and NPM
-Node.js is a Javascript runtime environment that processes data very quickly and is easy to scale. NPM is a Package Manager which is available for public use. NPM allows us to easily use code written by others without having to write it ourselves during development.
+## Start a new Project in React, you need NodeJS, NPM and Vite
+Node.js is a Javascript runtime environment that processes data very quickly and is easy to scale. NPM is a Package Manager which is available for public use (see https://www.npmjs.com/). Dependencies resolved via npm are listed in the package.json. The command `npm install` creates a folder `node-modules` in your project directory and downloads all dependencies. Vite is a build tool that aims to provide a faster and leaner development experience for modern web projects.
 
-### Create a new Project using NPX
-NPX stands for Node Package Execute. NPX comes with NPM, when NPM is installed above the 5.2.0 version, it gets installed automatically. NPX is an NPM package runner and its role is to execute the package from the registry without even installing that package.
+### First install NodsJS and Vite.
+NodeJS can be found on https://nodejs.org/en/download. Download the Build you need and install it, then install Vite.
 ```bash
-npx create-react-app login-register-form
+npm install -d create-vite
 ```
 
-### Change to folder login-register-form, start VS-Code and npm
-```bash
+### We are creating a new React project with Vite.
+```
+npm create vite@latest
+```
+Now you have to choose the Name for the Project (choose login-register-form), the Framework (choose React) and Javascript as Variant
+
+### Switch to folder 'login-register-form', install Node Packages.
+```
 cd login-register-form
-code .
-npm start
+npm install
 ```
+
+### Start the application now with npm start (runs on localhost:3000 in your Browser), here we can view our result "on-the-fly", then start VSCode
+```
+npm start
+code .
+```
+
 
 ### Goto src Folder in VS-Code and create new files with the Names "Login.jsx" and "Register.jsx"
 
